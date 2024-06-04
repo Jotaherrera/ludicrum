@@ -1,0 +1,21 @@
+# Commit Structure:
+#
+# [commit type]: [title] (#[issue-number])
+#
+# - Brief description of the commit purpose and changes.
+#
+####################################################################
+#
+# Title Rules:
+# - Use a summary in the imperative mood.
+# - Keep the title to no more than 50 characters.
+#
+# Commit Types:
+#
+# feat:     A new feature
+# fix:      A bug fix
+# docs:     Documentation changes
+# style:    Code style changes (formatting, white-space, etc.)
+# refactor: Code refactoring without adding features or fixing bugs
+# test:     Adding or correcting tests
+# chore:    Maintenance tasks (build process, dependencies, etc.)
