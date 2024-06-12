@@ -1,0 +1,21 @@
+#!/bin/bash
+
+function validate_commit_message {
+  local commit=$(git log -1 --pretty=format:"%H %s")
+  local regex='^([a-zA-Z ]+): [a-zA-Z0-9 ]+ \(#[0-9]+\)$'
+  local message=$(echo $commit | cut -d ' ' -f 2-)
+
+  : &&
+    if ! [[ $message =~ $regex ]]; then
+      echo "This commit has an invalid message: $message"
+      echo "Please follow the structure: [commit type]: [title] (#issue-number)"
+      exit 1
+    fi
+}
+
+function main {
+  : &&
+    validate_commit_message
+}
+
+main "${@}"
