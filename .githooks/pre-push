@@ -1,46 +1,7 @@
 #!/bin/bash
 
-function _log_message {
-  local level=$1
-  local message="${@:2}"
-
-  : && echo "[$(date +'%Y-%m-%d %H:%M:%S') - ${level}] ${message}"
-}
-
-function log_info {
-  local level="INFO"
-  local message="${1}"
-
-  : && _log_message "${level}" "${message}"
-}
-
-function log_success {
-  local level="INFO"
-  local message="${1}"
-
-  : && _log_message "${level}" "${message} ✅"
-}
-
-function log_error {
-  local level="ERROR"
-  local message="${1}"
-
-  : && _log_message "${level}" "${message}"
-}
-
-function log_failure {
-  local level="ERROR"
-  local message="${1}"
-
-  : && _log_message "${level}" "${message} 💀"
-}
-
-function _print_line {
-  local width=$(tput cols)
-  local line="$(printf '%*s' "$width" '' | tr ' ' '-')"
-
-  : && echo "${line}"
-}
+source `dirname $0`/../common/utils/logs.sh
+source `dirname $0`/../common/utils/utils.sh
 
 function validate_commit_message {
   local commit="$(git log -1 --pretty=format:"%H %s")"
