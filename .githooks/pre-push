@@ -32,15 +32,57 @@ function rebase_with_main {
 
 }
 
+function commit_count_in_branch {
+  local branch=$(git rev-parse --abbrev-ref HEAD)
+  local commit_count=$(git rev-list --count HEAD ^origin/$branch)
+
+  : && log_info "Checking commit count" \
+    && if [[ $commit_count -gt 1 ]]; then
+      log_failure "Commit count failed, there are $commit_count commits in $branch branch"
+      exit 1  
+    else
+      log_success "Commit count completed successfully"
+    fi
+}
+
+
+function contains_uppercase {
+    local title="$(git log -1 --pretty=format:"%s")"
+    local flag=0
+    local arrow_line=""
+    log_info "Checking upper case letters"
+    
+    for (( i=0; i<${#title}; i++ )); do
+      char="${title:$i:1}"
+      if [[ $char =~ [A-Z] ]]; then
+        flag=1
+        arrow_line+="^"
+      else
+        arrow_line+=" "
+      fi
+    done
+    
+    if [[ $flag -eq 1 ]]; then
+      log_error "Found upper case letters"
+      log_error "$title"
+      log_error "$arrow_line"
+      exit 1
+    else
+      log_success "Correct upper case letter format"
+    fi
+}
+
 function main {
 
   :  && _print_line \
     && log_info "Running pre-psuh checks" \
     && validate_commit_message \
     && rebase_with_main \
+    && contains_uppercase \
+    && commit_count_in_branch \
     && log_success "All pre-push checks passed" \
-    && _print_line
-    
+    && _print_line 
+
 }
 
 main "${@}"
