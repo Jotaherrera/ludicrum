@@ -32,15 +32,29 @@ function rebase_with_main {
 
 }
 
+function commit_count_in_branch {
+  local branch=$(git rev-parse --abbrev-ref HEAD)
+  local commit_count=$(git rev-list --count HEAD ^origin/$branch)
+
+  : && log_info "Checking commit count" \
+    && if [[ $commit_count -gt 1 ]]; then
+      log_failure "Commit count failed, there are $commit_count commits in $branch branch"
+      exit 1  
+    else
+      log_success "Commit count completed successfully"
+    fi
+}
+
 function main {
 
   :  && _print_line \
     && log_info "Running pre-psuh checks" \
     && validate_commit_message \
     && rebase_with_main \
+    && commit_count_in_branch \
     && log_success "All pre-push checks passed" \
-    && _print_line
-    
+    && _print_line 
+
 }
 
 main "${@}"
