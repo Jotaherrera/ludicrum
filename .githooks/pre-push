@@ -1,46 +1,9 @@
 #!/bin/bash
 
-function _log_message {
-  local level=$1
-  local message="${@:2}"
+base_path=$(dirname $0)/../common/utils/
 
-  : && echo "[$(date +'%Y-%m-%d %H:%M:%S') - ${level}] ${message}"
-}
-
-function log_info {
-  local level="INFO"
-  local message="${1}"
-
-  : && _log_message "${level}" "${message}"
-}
-
-function log_success {
-  local level="INFO"
-  local message="${1}"
-
-  : && _log_message "${level}" "${message} ✅"
-}
-
-function log_error {
-  local level="ERROR"
-  local message="${1}"
-
-  : && _log_message "${level}" "${message}"
-}
-
-function log_failure {
-  local level="ERROR"
-  local message="${1}"
-
-  : && _log_message "${level}" "${message} 💀"
-}
-
-function _print_line {
-  local width=$(tput cols)
-  local line="$(printf '%*s' "$width" '' | tr ' ' '-')"
-
-  : && echo "${line}"
-}
+source ${base_path}logs.sh
+source ${base_path}utils.sh
 
 function validate_commit_message {
   local commit="$(git log -1 --pretty=format:"%H %s")"
@@ -76,7 +39,7 @@ function rebase_with_main {
 function main {
 
   :  && _print_line \
-    && log_info "Running pre-psuh checks" \
+    && log_info "Running pre-push checks" \
     && validate_commit_message \
     && rebase_with_main \
     && log_success "All pre-push checks passed" \
