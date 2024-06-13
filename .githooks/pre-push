@@ -1,21 +1,87 @@
 #!/bin/bash
 
-function validate_commit_message {
-  local commit=$(git log -1 --pretty=format:"%H %s")
-  local regex='^([a-zA-Z ]+): [a-zA-Z0-9 ]+ \(#[0-9]+\)$'
-  local message=$(echo $commit | cut -d ' ' -f 2-)
+function _log_message {
+  local level=$1
+  local message="${@:2}"
 
-  : &&
-    if ! [[ $message =~ $regex ]]; then
-      echo "This commit has an invalid message: $message"
-      echo "Please follow the structure: [commit type]: [title] (#issue-number)"
+  : && echo "[$(date +'%Y-%m-%d %H:%M:%S') - ${level}] ${message}"
+}
+
+function log_info {
+  local level="INFO"
+  local message="${1}"
+
+  : && _log_message "${level}" "${message}"
+}
+
+function log_success {
+  local level="INFO"
+  local message="${1}"
+
+  : && _log_message "${level}" "${message} ✅"
+}
+
+function log_error {
+  local level="ERROR"
+  local message="${1}"
+
+  : && _log_message "${level}" "${message}"
+}
+
+function log_failure {
+  local level="ERROR"
+  local message="${1}"
+
+  : && _log_message "${level}" "${message} 💀"
+}
+
+function _print_line {
+  local width=$(tput cols)
+  local line="$(printf '%*s' "$width" '' | tr ' ' '-')"
+
+  : && echo "${line}"
+}
+
+function validate_commit_message {
+  local commit="$(git log -1 --pretty=format:"%H %s")"
+  local regex='^([a-zA-Z ]+): [a-zA-Z0-9 ]+ \(#[0-9]+\)$'
+  local message="$(echo $commit | cut -d ' ' -f 2-)"
+
+  : && log_info "Checking commit structure" \
+    && if ! [[ $message =~ $regex ]]; then
+      log_error "This commit has an invalid message: $message"
+      log_error "Please follow the structure: [commit type]: [title] (#issue-number)"
+      log_failure "Commit checking unsuccessful"
       exit 1
+    fi \
+    && log_success "Correct commit structure"
+}
+
+function rebase_with_main {
+  local main_branch='main'
+  local branch_name="$(git rev-parse --abbrev-ref HEAD)"
+
+    : && log_info "Rebasing ${branch_name} with ${main_branch}" \
+      && if git pull --rebase --autostash origin "${main_branch}"; then
+        log_success "Rebase completed successfully"
+      else
+        log_failure "Rebasing could not be completed"
+        exit 1
     fi
+
+
+
 }
 
 function main {
-  : &&
-    validate_commit_message
+
+  :  && _print_line \
+    && log_info "Running pre-psuh checks" \
+    && validate_commit_message \
+    && rebase_with_main \
+    && log_success "All pre-push checks passed" \
+    && _print_line
+    
 }
 
 main "${@}"
