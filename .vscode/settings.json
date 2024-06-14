@@ -1,16 +1,38 @@
 {
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "[markdown]": {
     "editor.rulers": [80]
   },
   "[python]": {
     "editor.defaultFormatter": "jkillian.custom-local-formatters",
-    "editor.rulers": [79],
+    "editor.rulers": [80],
     "editor.tabSize": 4
+  },
+  "[shellscript]": {
+    "editor.defaultFormatter": "jkillian.custom-local-formatters"
   },
   "customLocalFormatters.formatters": [
     {
-      "command": "shfmt -bn -ci -i 2 -s -sr",
+      "command": "./common/developer/formatter/custom-fmt.sh  shellscript",
       "languages": ["shellscript"]
+    },
+    {
+      "command": "./common/developer/formatter/custom-fmt.sh python",
+      "languages": ["python"]
+    },
+    {
+      "command": "./common/developer/formatter/custom-fmt.sh  css",
+      "languages": ["css"]
+    },
+    {
+      "command": "./common/developer/formatter/custom-fmt.sh  html",
+      "languages": ["html"]
+    },
+    {
+      "command": "./common/developer/formatter/custom-fmt.sh json",
+      "languages": ["json", "jsonc"]
     }
   ],
   "editor.bracketPairColorization.enabled": true,
@@ -23,8 +45,5 @@
   "files.eol": "\n",
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
-  "files.trimTrailingWhitespace": true,
-  "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
+  "files.trimTrailingWhitespace": true
 }
