@@ -1,0 +1,30 @@
+{
+  "[markdown]": {
+    "editor.rulers": [80]
+  },
+  "[python]": {
+    "editor.defaultFormatter": "jkillian.custom-local-formatters",
+    "editor.rulers": [79],
+    "editor.tabSize": 4
+  },
+  "customLocalFormatters.formatters": [
+    {
+      "command": "shfmt -bn -ci -i 2 -s -sr",
+      "languages": ["shellscript"]
+    }
+  ],
+  "editor.bracketPairColorization.enabled": true,
+  "editor.defaultFormatter": "jkillian.custom-local-formatters",
+  "editor.formatOnPaste": false,
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "editor.guides.bracketPairs": "active",
+  "editor.tabSize": 2,
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+}
