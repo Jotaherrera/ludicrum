@@ -1,6 +1,7 @@
 {
   "recommendations": [
     "4ops.terraform",
+    "biati.vscode-text-tools",
     "dbaeumer.vscode-eslint",
     "eamodio.gitlens",
     "hashicorp.terraform",
@@ -13,6 +14,7 @@
     "shardulm94.trailing-spaces",
     "SonarSource.sonarlint-vscode",
     "streetsidesoftware.code-spell-checker",
+    "tamasfe.even-better-toml",
     "timonwong.shellcheck",
     "usernamehw.errorlens",
     "znck.grammarly"
