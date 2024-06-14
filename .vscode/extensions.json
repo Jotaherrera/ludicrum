@@ -1,0 +1,20 @@
+{
+  "recommendations": [
+    "4ops.terraform",
+    "dbaeumer.vscode-eslint",
+    "eamodio.gitlens",
+    "hashicorp.terraform",
+    "jkillian.custom-local-formatters",
+    "joaompinto.vscode-graphviz",
+    "mads-hartmann.bash-ide-vscode",
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "njpwerner.autodocstring",
+    "shardulm94.trailing-spaces",
+    "SonarSource.sonarlint-vscode",
+    "streetsidesoftware.code-spell-checker",
+    "timonwong.shellcheck",
+    "usernamehw.errorlens",
+    "znck.grammarly"
+  ]
+}
