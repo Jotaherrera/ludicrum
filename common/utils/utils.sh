@@ -1,8 +1,10 @@
 #!/bin/bash
 
 function _print_line {
-  local width=$(tput cols)
-  local line="$(printf '%*s' "$width" '' | tr ' ' '-')"
+  local width
+  local line
 
-  : && echo "${line}"
+  : && width=$(tput cols) \
+    && line="$(printf '%*s' "$width" '' | tr ' ' '-')" \
+    && echo "${line}"
 }
