@@ -1,6 +1,6 @@
 {
   "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "jkillian.custom-local-formatters"
   },
   "[markdown]": {
     "editor.rulers": [80]
