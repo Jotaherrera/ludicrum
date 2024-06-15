@@ -1,16 +1,19 @@
 #!/bin/bash
 
-source `dirname $0`/../common/utils/logs.sh
-source `dirname $0`/../common/utils/utils.sh
+source "$(dirname "$0")/../common/utils/logs.sh"
+source "$(dirname "$0")/../common/utils/utils.sh"
 
 function validate_commit_message {
-  local commit="$(git log -1 --pretty=format:"%H %s")"
-  local regex='^([a-zA-Z ]+): [a-zA-Z0-9 ]+ \(#[0-9]+\)$'
-  local message="$(echo $commit | cut -d ' ' -f 2-)"
+  local commit
+  local regex
+  local message
 
-  : && log_info "Checking commit structure" \
-    && if ! [[ $message =~ $regex ]]; then
-      log_error "This commit has an invalid message: $message"
+  : && commit="$(git log -1 --pretty=format:"%H %s")" \
+    && regex='^([a-zA-Z ]+): [a-zA-Z0-9 ]+ \(#[0-9]+\)$' \
+    && message="$(echo "${commit}" | cut -d ' ' -f 2-)" \
+    && log_info "Checking commit structure" \
+    && if ! [[ ${message} =~ ${regex} ]]; then
+      log_error "This commit has an invalid message: ${message}"
       log_error "Please follow the structure: [commit type]: [title] (#issue-number)"
       log_failure "Commit checking unsuccessful"
       exit 1
@@ -20,26 +23,29 @@ function validate_commit_message {
 
 function rebase_with_main {
   local main_branch='main'
-  local branch_name="$(git rev-parse --abbrev-ref HEAD)"
+  local branch_name
 
-    : && log_info "Rebasing ${branch_name} with ${main_branch}" \
-      && if git pull --rebase --autostash origin "${main_branch}"; then
-        log_success "Rebase completed successfully"
-      else
-        log_failure "Rebasing could not be completed"
-        exit 1
+  : && branch_name="$(git rev-parse --abbrev-ref HEAD)" \
+    && log_info "Rebasing ${branch_name} with ${main_branch}" \
+    && if git pull --rebase --autostash origin "${main_branch}"; then
+      log_success "Rebase completed successfully"
+    else
+      log_failure "Rebasing could not be completed"
+      exit 1
     fi
 
 }
 
 function commit_count_in_branch {
-  local branch=$(git rev-parse --abbrev-ref HEAD)
-  local commit_count=$(git rev-list --count HEAD ^origin/$branch)
+  local branch
+  local commit_count
 
+  commit_count="$(git rev-list --count HEAD ^origin/"${branch}")"
+  branch=$(git rev-parse --abbrev-ref HEAD)
   : && log_info "Checking commit count" \
     && if [[ $commit_count -gt 1 ]]; then
       log_failure "Commit count failed, there are $commit_count commits in $branch branch"
-      exit 1  
+      exit 1
     else
       log_success "Commit count completed successfully"
     fi
@@ -47,13 +53,13 @@ function commit_count_in_branch {
 
 function main {
 
-  :  && _print_line \
-    && log_info "Running pre-psuh checks" \
+  : && _print_line \
+    && log_loading "Running pre-psuh checks" \
     && validate_commit_message \
     && rebase_with_main \
     && commit_count_in_branch \
     && log_success "All pre-push checks passed" \
-    && _print_line 
+    && _print_line
 
 }
 

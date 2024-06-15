@@ -1,36 +1,33 @@
 #!/bin/bash
 
 function _log_message {
-  local level=$1
-  local message="${@:2}"
+  : && echo "[$(date +'%Y-%m-%d %H:%M:%S') - ${1}]" "${@:2}" 1>&2
+}
 
-  : && echo "[$(date +'%Y-%m-%d %H:%M:%S') - ${level}] ${message}"
+function echo_stderr {
+  echo "${@}" 1>&2
+}
+
+function info {
+  echo_stderr "[INFO]" "${@}"
 }
 
 function log_info {
-  local level="INFO"
-  local message="${1}"
-
-  : && _log_message "${level}" "${message}"
+  : && _log_message "INFO" "${@}"
 }
 
 function log_success {
-  local level="INFO"
-  local message="${1}"
+  : && _log_message "INFO" "${@}" "✅"
+}
 
-  : && _log_message "${level}" "${message} ✅"
+function log_loading {
+  : && _log_message "INFO" "${@}" "⏳"
 }
 
 function log_error {
-  local level="ERROR"
-  local message="${1}"
-
-  : && _log_message "${level}" "${message}"
+  : && _log_message "${ERROR}" "${@}"
 }
 
 function log_failure {
-  local level="ERROR"
-  local message="${1}"
-
-  : && _log_message "${level}" "${message} 💀"
+  : && _log_message "${ERROR}" "${@}" "💀"
 }

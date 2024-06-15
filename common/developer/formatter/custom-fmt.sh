@@ -14,5 +14,5 @@ case "${1-}" in
   shellscript) shfmt -bn -ci -i 2 -s -sr - ;;
   terraform) terraform fmt - ;;
   yaml) npx prettier --parser yaml ;;
-  *) exit 1;;
+  *) exit 1 ;;
 esac
