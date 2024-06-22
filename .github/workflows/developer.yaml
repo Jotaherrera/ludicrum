@@ -16,3 +16,20 @@ jobs:
 
       - name: Run Bash Linter
         run: bash common/tests/lintShell.sh
+
+  test_github_infrastructure:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.0.0
+
+      - name: Test Github infrastructure
+        env:
+          TF_VAR_ludicrum_token: ${{ secrets.LUDICRUM_TOKEN }}
+        run: bash common/tests/github_infrastructure.sh
