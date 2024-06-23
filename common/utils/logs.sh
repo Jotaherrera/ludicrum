@@ -8,10 +8,6 @@ function echo_stderr {
   echo "${@}" 1>&2
 }
 
-function info {
-  echo_stderr "[INFO]" "${@}"
-}
-
 function log_info {
   : && _log_message "INFO" "${@}"
 }
@@ -25,9 +21,9 @@ function log_loading {
 }
 
 function log_error {
-  : && _log_message "${ERROR}" "${@}"
+  : && _log_message "ERROR" "${@}"
 }
 
 function log_failure {
-  : && _log_message "${ERROR}" "${@}" "💀"
+  : && _log_message "ERROR" "${@}" "💀"
 }
