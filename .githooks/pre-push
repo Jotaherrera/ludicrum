@@ -11,7 +11,7 @@ function validate_commit_message {
   : && commit="$(git log -1 --pretty=format:"%H %s")" \
     && regex='^([a-zA-Z ]+): [a-zA-Z0-9 ]+ \(#[0-9]+\)$' \
     && message="$(echo "${commit}" | cut -d ' ' -f 2-)" \
-    && log_info "Checking commit structure" \
+    && log_loading "Checking commit structure" \
     && if ! [[ ${message} =~ ${regex} ]]; then
       log_error "This commit has an invalid message: ${message}"
       log_error "Please follow the structure: [commit type]: [title] (#issue-number)"
@@ -26,7 +26,7 @@ function rebase_with_main {
   local branch_name
 
   : && branch_name="$(git rev-parse --abbrev-ref HEAD)" \
-    && log_info "Rebasing ${branch_name} with ${main_branch}" \
+    && log_loading "Rebasing ${branch_name} with ${main_branch}" \
     && if git pull --rebase --autostash origin "${main_branch}"; then
       log_success "Rebase completed successfully"
     else
@@ -42,7 +42,7 @@ function commit_count_in_branch {
 
   commit_count="$(git rev-list --count HEAD ^origin/"${branch}")"
   branch=$(git rev-parse --abbrev-ref HEAD)
-  : && log_info "Checking commit count" \
+  : && log_loading "Checking commit count" \
     && if [[ $commit_count -gt 1 ]]; then
       log_failure "Commit count failed, there are $commit_count commits in $branch branch"
       exit 1
@@ -54,7 +54,7 @@ function commit_count_in_branch {
 function main {
 
   : && _print_line \
-    && log_loading "Running pre-psuh checks" \
+    && log_loading "Running pre-push checks" \
     && validate_commit_message \
     && rebase_with_main \
     && commit_count_in_branch \
