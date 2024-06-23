@@ -1,0 +1,23 @@
+name: production
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  apply_github_infrastructure:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.0.0
+
+      - name: Apply Github infrastructure
+        env:
+          TF_VAR_ludicrum_token: ${{ secrets.LUDICRUM_TOKEN }}
+        run: bash common/infrastructure/jobs/apply_github_infrastructure.sh
