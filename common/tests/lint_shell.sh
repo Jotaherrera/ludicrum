@@ -32,12 +32,13 @@ function lint_sh {
       log_failure "There are files with programmatic and stylistic errors"
       return 1
     else
-      log_success "Well done! All files correct"
+      log_success "Well done! All files are correct"
       return 0
     fi
 }
 
 function main {
+
   : && lint_sh
 }
 
