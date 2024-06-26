@@ -3,7 +3,6 @@
 source "$(dirname "$0")"/../utils/logs.sh
 
 function test_infrastructure {
-
   : && log_loading "Testing GitHub infrastructure configuration with Terraform" \
     && log_info "Moving to GitHub infrastructure directory" \
     && cd common/infrastructure/github \
@@ -13,7 +12,7 @@ function test_infrastructure {
     && log_loading "Importing current infrastructure configuration" \
     && terraform import github_repository.ludicrum ludicrum \
     && log_success "Current configuration imported successfully" \
-    && log_loading "Checking changes Terraform plan" \
+    && log_loading "Checking Terraform plan" \
     && if terraform plan; then
       log_success "Github infrastructure configuration is correct and ready to apply"
     else
@@ -23,7 +22,6 @@ function test_infrastructure {
 }
 
 function main {
-
   : && test_infrastructure
 }
 
