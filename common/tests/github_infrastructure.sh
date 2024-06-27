@@ -9,11 +9,9 @@ function test_infrastructure {
     && log_loading "Initiating Terraform" \
     && terraform init \
     && log_success "Terraform correctly initialized" \
-    && log_loading "Importing current infrastructure configuration" \
-    && terraform import github_repository.ludicrum ludicrum \
     && log_success "Current configuration imported successfully" \
     && log_loading "Checking Terraform plan" \
-    && if terraform plan; then
+    && if terraform plan -refresh=true; then
       log_success "Github infrastructure configuration is correct and ready to apply"
     else
       log_failure "Something went wrong with the infrastructure checking" \
