@@ -1,4 +1,11 @@
 terraform {
+    cloud {
+    organization = "ludicrum"
+
+    workspaces {
+      name = "ludicrum_github"
+    }
+  }
   required_providers {
     github = {
       source  = "integrations/github"
