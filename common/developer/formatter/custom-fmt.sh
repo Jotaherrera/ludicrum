@@ -1,7 +1,5 @@
 #!/bin/bash
 
-source "$(dirname "$0")/../../../common/utils/logs.sh"
-
 case "${1-}" in
   css) npx prettier --parser css ;;
   html) npx prettier --parser html ;;
