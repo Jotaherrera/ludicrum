@@ -3,8 +3,7 @@
 source "$(dirname "$0")"/../utils/logs.sh
 
 function test_infrastructure {
-
-  pushd common/infrastructure/github \
+  : && pushd common/infrastructure/github \
     && log_loading "Testing GitHub infrastructure configuration with Terraform" \
     && log_loading "Initiating Terraform" \
     && terraform init \
@@ -19,7 +18,6 @@ function test_infrastructure {
 }
 
 function main {
-
   : && test_infrastructure
 }
 

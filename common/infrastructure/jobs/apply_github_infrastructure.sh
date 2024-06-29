@@ -3,8 +3,7 @@
 source "$(dirname "$0")"/../../utils/logs.sh
 
 function apply_infrastructure {
-
-  pushd common/infrastructure/github \
+  : && pushd common/infrastructure/github \
     && log_loading "Applying GitHub infrastructure configuration with Terraform" \
     && log_info "Moving to GitHub infrastructure directory" \
     && log_loading "Initiating Terraform" \
@@ -20,7 +19,6 @@ function apply_infrastructure {
 }
 
 function main {
-
   : && apply_infrastructure
 }
 

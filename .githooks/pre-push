@@ -33,7 +33,6 @@ function rebase_with_main {
       log_failure "Rebasing could not be completed"
       exit 1
     fi
-
 }
 
 function commit_count_in_branch {
@@ -52,7 +51,6 @@ function commit_count_in_branch {
 }
 
 function main {
-
   : && _print_line \
     && log_loading "Running pre-push checks" \
     && validate_commit_message \
@@ -60,7 +58,6 @@ function main {
     && commit_count_in_branch \
     && log_success "All pre-push checks passed" \
     && _print_line
-
 }
 
 main "${@}"

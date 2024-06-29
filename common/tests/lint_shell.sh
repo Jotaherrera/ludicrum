@@ -38,7 +38,6 @@ function lint_sh {
 }
 
 function main {
-
   : && lint_sh
 }
 
