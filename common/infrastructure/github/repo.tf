@@ -7,7 +7,7 @@ resource "github_repository" "ludicrum" {
   archived               = false
   auto_init              = false
   delete_branch_on_merge = true
-  description            = "Repository with the best practices"
+  description            = "This repository exemplifies global best practices, ensuring robustness, scalability, and maintainability across its codebase."
   has_downloads          = true
   has_issues             = true
   has_projects           = true
