@@ -1,5 +1,11 @@
 {
   "devDependencies": {
+    "@types/prop-types": "^15.7.13",
     "prettier": "^3.3.2"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^6.1.2"
   }
 }
